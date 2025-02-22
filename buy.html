@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина NaomiSweet</title>
+    <style>
+    /* Основные стили */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+        margin: 0;
+        padding: 0;
+    }
+    /* Стили для header */
+    header { 
+        background: #ffcccb; 
+        padding: 10px; 
+        text-align: center; 
+        font-size: 24px; 
+    }
+
+    header img { 
+        vertical-align: middle; 
+        margin-left: 10px; 
+    }
+
+    /* Стили для nav */
+    nav { 
+        display: flex; 
+        justify-content: center; 
+        gap: 10px; 
+        padding: 10px; 
+        background: #ffe4e1; 
+        margin-bottom: 20px;
+    }
+
+    nav a { 
+        color: #333; 
+        text-decoration: none; 
+        padding: 8px; 
+        font-weight: normal;
+        transition: color 0.3s ease;
+    }
+
+    nav a:hover { 
+        color: #d50000; 
+    }
+
+    nav a.active { 
+        font-weight: bold; 
+        color: #d50000; 
+    }
+
+    .container {
+        padding: 15px;
+        background-color: #fff;
+        max-width: 1000px;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    h2 {
+        color: #333;
+    }
+
+    /* Таблица корзины */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+    }
+    
+    table th, table td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    
+    table th {
+        background-color: #ffcccc;
+    }
+    
+    /* Кнопки */
+    .clear-cart-button, #payment-button {
+        width: 100%;
+        background-color: #ff6666;
+        color: white;
+        padding: 12px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-top: 15px;
+    }
+    
+    .clear-cart-button:hover, #payment-button:hover {
+        background-color: #ff4d4d;
+    }
+
+    #payment-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
+
+    /* Формы */
+    .form-group {
+        margin: 15px 0;
+    }
+    
+    .form-group label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    /* Сообщение об успешном заказе */
+    .order-message {
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #e0f7e0;
+        color: #388e3c;
+        border-radius: 5px;
+        display: none;
+    }
+
+    /* Сообщение о пустой корзине */
+    #empty-cart-message {
+        color: #ff6666;
+        font-size: 18px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    footer { 
+        text-align: center; 
+        padding: 10px; 
+        background: #ffcccb; 
+        margin-top: 20px; 
+    }
+
+    footer a { 
+        color: #333; 
+        text-decoration: none; 
+        margin: 0 10px;
+    }
+
+    footer a:hover { 
+        color: #d50000; 
+    }
+
+    /* Медиазапросы для мобильных устройств */
+    @media (max-width: 600px) {
+        header {
+            font-size: 20px;
+        }
+
+        nav {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        nav a {
+            padding: 10px;
+        }
+
+        table th, table td {
+            padding: 6px;
+        }
+
+        .clear-cart-button, #payment-button {
+            padding: 10px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header>
+        NaomiSweet - Кондитерская
+        <img src="photo_2025-02-18_20-31-03-removebg-preview.png" alt="NaomiSweet Logo" width="60">
+    </header>
+    <nav>
+        <a href="index.html" class="active">Главная</a>
+        <a href="katalog.html">Каталог</a>
+        <a href="login.html">Войти</a>
+    </nav>
+
+    <div class="container">
+        <h2>Корзина товаров</h2>
+
+        <div id="empty-cart-message">Ваша корзина пуста</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Итого</th>
+                </tr>
+            </thead>
+            <tbody id="cart-table">
+                <!-- Товары из корзины будут добавляться сюда -->
+            </tbody>
+        </table>
+
+        <h3>Итоговая сумма: <span id="total">0 KZT</span></h3>
+
+        <button class="clear-cart-button" onclick="clearCart()">Очистить корзину</button>
+
+        <form id="payment-form" onsubmit="handlePayment(event)">
+            <div class="form-group">
+                <label for="name">Имя владельца карты</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="card-number">Номер карты</label>
+                <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="form-group">
+                <label for="expiry-date">Срок действия</label>
+                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="123" required>
+            </div>
+            <div class="form-group">
+                <label for="billing-address">Адрес для выставления счета</label>
+                <input type="text" id="billing-address" name="billing-address" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" id="payment-button" disabled>Оплатить</button>
+            </div>
+        </form>
+
+        <!-- Сообщение о заказе -->
+        <div id="order-message" class="order-message"></div>
+    </div>
+
+    <script>
+        // Функция для отображения корзины
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartTable = document.getElementById("cart-table");
+            let total = 0;
+
+            // Очистим таблицу перед заполнением
+            cartTable.innerHTML = "";
+
+            // Заполняем таблицу корзины
+            if (cart.length === 0) {
+                document.getElementById("empty-cart-message").style.display = "block"; // Показать сообщение о пустой корзине
+                document.getElementById("payment-button").disabled = true; // Блокируем кнопку оплаты
+            } else {
+                document.getElementById("empty-cart-message").style.display = "none"; // Скрыть сообщение
+                cart.forEach(item => {
+                    let row = cartTable.insertRow();
+                    row.insertCell(0).innerText = item.name;
+                    row.insertCell(1).innerText = item.price + " KZT";
+                    row.insertCell(2).innerText = item.quantity;
+                    row.insertCell(3).innerText = item.price * item.quantity + " KZT";
+                    total += item.price * item.quantity;
+                });
+
+                // Показываем итоговую сумму
+                document.getElementById("total").innerText = total + " KZT";
+                document.getElementById("payment-button").disabled = false; // Разблокируем кнопку оплаты
+            }
+        }
+
+        // Функция для очистки корзины
+        function clearCart() {
+            localStorage.removeItem("cart");
+            document.getElementById("cart-table").innerHTML = "";
+            document.getElementById("total").innerText = "0 KZT";
+            document.getElementById("payment-button").disabled = true; // Блокируем оплату, если корзина пуста
+        }
+
+        // Функция для обработки формы оплаты
+        function handlePayment(event) {
+            event.preventDefault(); // Предотвращаем отправку формы
+
+            // Проверка, что все поля формы заполнены
+            let name = document.getElementById("name").value;
+            let cardNumber = document.getElementById("card-number").value;
+            let expiryDate = document.getElementById("expiry-date").value;
+            let cvv = document.getElementById("cvv").value;
+            let billingAddress = document.getElementById("billing-address").value;
+
+            // Проверка правильности введенных данных с использованием регулярных выражений
+            let cardNumberPattern = /^\d{4} \d{4} \d{4} \d{4}$/;
+            let expiryDatePattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
+            let cvvPattern = /^\d{3}$/;
+
+            if (!name || !cardNumber || !expiryDate || !cvv || !billingAddress) {
+                alert("Пожалуйста, заполните все поля!");
+                return;
+            }
+
+            if (!cardNumberPattern.test(cardNumber)) {
+                alert("Неверный формат номера карты.");
+                return;
+            }
+
+            if (!expiryDatePattern.test(expiryDate)) {
+                alert("Неверный формат срока действия карты.");
+                return;
+            }
+
+            if (!cvvPattern.test(cvv)) {
+                alert("Неверный формат CVV.");
+                return;
+            }
+
+            // Отображаем сообщение о том, что заказ оформлен
+            document.getElementById("order-message").style.display = "block";
+            document.getElementById("order-message").innerText = "Заказ оформлен успешно!";
+        }
+
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            loadCart();
+        };
+    </script>
+</body>
+</html>

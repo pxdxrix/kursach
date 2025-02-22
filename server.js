@@ -1,61 +1,78 @@
 const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
 const bcrypt = require("bcrypt");
 const cors = require("cors");
+require("dotenv").config();
+const { Client } = require("pg");
 
 const app = express();
-const db = new sqlite3.Database("./users.db");
+
+// Подключение к PostgreSQL
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false } // Для Render
+});
+
+client.connect()
+    .then(() => console.log("✅ Подключение к PostgreSQL успешно"))
+    .catch(err => console.error("❌ Ошибка подключения к БД", err));
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
-// Создание таблицы users, если её нет
-db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
-)`);
+// ✅ Создание таблицы, если её нет
+client.query(`
+    CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        username TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL
+    )
+`).then(() => console.log("✅ Таблица users готова"))
+  .catch(err => console.error("❌ Ошибка при создании таблицы", err));
 
 // ✅ Регистрация нового пользователя
 app.post("/register", async (req, res) => {
     console.log("Регистрация:", req.body);
-
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
         return res.status(400).json({ message: "Все поля обязательны" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    db.get(`SELECT * FROM users WHERE email = ?`, [email], (err, row) => {
-        if (row) {
+    try {
+        // Проверяем, существует ли email
+        const existingUser = await client.query("SELECT * FROM users WHERE email = $1", [email]);
+        if (existingUser.rows.length > 0) {
             return res.status(400).json({ message: "Этот email уже используется" });
         }
 
-        db.run(
-            `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
-            [username, email, hashedPassword],
-            function (err) {
-                if (err) {
-                    return res.status(500).json({ message: "Ошибка сервера" });
-                }
-                console.log("Пользователь добавлен:", username, email);
-                res.json({ message: "Регистрация успешна!" });
-            }
-        );
-    });
+        // Хэшируем пароль
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Записываем нового пользователя
+        await client.query("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)", 
+            [username, email, hashedPassword]);
+
+        console.log("✅ Пользователь добавлен:", username, email);
+        res.json({ message: "Регистрация успешна!" });
+
+    } catch (error) {
+        console.error("❌ Ошибка регистрации", error);
+        res.status(500).json({ message: "Ошибка сервера" });
+    }
 });
 
 // ✅ Вход пользователя
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
     console.log("Вход:", req.body);
     const { email, password } = req.body;
 
-    db.get(`SELECT * FROM users WHERE email = ?`, [email], async (err, user) => {
-        if (err || !user) {
+    try {
+        const result = await client.query("SELECT * FROM users WHERE email = $1", [email]);
+        const user = result.rows[0];
+
+        if (!user) {
             return res.status(400).json({ message: "Неверный email или пароль" });
         }
 
@@ -64,13 +81,17 @@ app.post("/login", (req, res) => {
             return res.status(400).json({ message: "Неверный email или пароль" });
         }
 
-        console.log("Успешный вход:", user.username);
+        console.log("✅ Успешный вход:", user.username);
         res.json({ message: `Добро пожаловать, ${user.username}!` });
-    });
+
+    } catch (error) {
+        console.error("❌ Ошибка входа", error);
+        res.status(500).json({ message: "Ошибка сервера" });
+    }
 });
 
-// 🔥 Сервер запускается на порту, который даёт Render
-const PORT = process.env.PORT;
+// 🔥 Запуск сервера
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Сервер запущен на порту ${PORT}`);
+    console.log(`🚀 Сервер запущен на порту ${PORT}`);
 });

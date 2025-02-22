@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров - NaomiSweet</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f9f9f9; 
+            color: #333; 
+        }
+
+        header { 
+            background: #ffcccb; 
+            padding: 15px; 
+            text-align: center; 
+            font-size: 32px; 
+        }
+
+        header img { 
+            vertical-align: middle; 
+            margin-left: 10px; 
+        }
+
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            padding: 10px; 
+            background: #ffe4e1; 
+            margin-bottom: 20px;
+        }
+
+        nav a { 
+            color: #333; 
+            text-decoration: none; 
+            padding: 10px; 
+            font-weight: normal;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover { 
+            color: #d50000; 
+        }
+
+        nav a.active { 
+            font-weight: bold; 
+            color: #d50000; 
+        }
+
+        .container { 
+            width: 90%; 
+            max-width: 1200px; 
+            margin: auto; 
+            padding: 20px; 
+            background-color: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        }
+
+        h2 { 
+            color: #ff6f61; 
+            margin-bottom: 20px; 
+            font-size: 24px; 
+        }
+
+        .filters {
+            margin-bottom: 20px;
+        }
+
+        .filters select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .category { 
+            margin-bottom: 40px;
+        }
+
+        .category h3 {
+            font-size: 22px;
+            color: #ff6f61;
+            margin-bottom: 15px;
+        }
+
+        .products { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+        }
+
+        .product { 
+            width: 23%; 
+            padding: 15px; 
+            background: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            text-align: center; 
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product img { 
+            width: 100%; 
+            border-radius: 8px; 
+            transition: transform 0.3s ease;
+        }
+
+        .product img:hover {
+            transform: scale(1.1); 
+        }
+
+        .product h4 { 
+            color: #ff6f61; 
+            font-size: 18px; 
+            margin-top: 15px; 
+        }
+
+        .product p { 
+            color: #333; 
+            margin: 10px 0; 
+        }
+
+        .product button { 
+            padding: 10px 15px; 
+            background: #ff6f61; 
+            color: #fff; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 14px; 
+            transition: background-color 0.3s ease;
+        }
+
+        .product button:hover { 
+            background-color: #d50000; 
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 15px; 
+            background: #ffcccb; 
+            margin-top: 20px; 
+        }
+
+        footer a { 
+            color: #333; 
+            text-decoration: none; 
+            margin: 0 10px;
+        }
+
+        footer a:hover { 
+            color: #d50000; 
+        }
+
+        @media (max-width: 768px) {
+            nav { 
+                flex-direction: column; 
+            }
+
+            .products { 
+                flex-direction: column; 
+                align-items: center; 
+            }
+
+            .product { 
+                width: 80%; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 { 
+                font-size: 20px; 
+            }
+
+            .category h3 {
+                font-size: 20px;
+            }
+
+            .product { 
+                width: 100%; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        NaomiSweet - Кондитерская
+        <img src="photo_2025-02-18_20-31-03-removebg-preview.png" alt="NaomiSweet Logo" width="80">
+    </header>
+    <nav>
+        <a href="index.html" class="active">Главная</a>
+        <a href="#">Каталог</a>
+        <a href="#footer">Контакты</a>
+        <a href="login.html">Войти</a>
+        <a href="buy.html" class="cart-button">Корзина</a>
+    </nav>
+
+    <div class="container">
+        <div class="filters">
+            <select id="sort-select" onchange="sortProducts()">
+                <option value="price-asc">По цене: от дешевого к дорогому</option>
+                <option value="price-desc">По цене: от дорогого к дешевому</option>
+                <option value="popularity">По популярности</option>
+            </select>
+        </div>
+
+        <h2>Каталог товаров</h2>
+
+        <!-- Группа "Торты" -->
+        <div class="category">
+            <h3>Торты</h3>
+            <div class="products" id="torts">
+                <div class="product" data-price="9900" data-popularity="5">
+                    <img src="БИСКВИТНЫЙ_ШОКОЛАДНЫЙ_ТОРТ_С_АПЕЛЬСИНОМ.jpeg" alt="Торт Шоколадная мечта">
+                    <h4>Торт "Шоколадная мечта"</h4>
+                    <p>Цена: 9900 KZT</p>
+                    <button onclick="addToCart('Торт Шоколадная мечта', 9900)">Добавить в корзину</button>
+                </div>
+                <!-- Добавь другие товары в категорию "Торты" -->
+            </div>
+        </div>
+
+        <!-- Группа "Пирожные" -->
+        <div class="category">
+            <h3>Пирожные</h3>
+            <div class="products" id="pyrizhnye">
+                <div class="product" data-price="900" data-popularity="3">
+                    <img src="5e8b96ebad5bc9d995f580dfb2eaa061.jpg" alt="Пирожное Крем-брюле">
+                    <h4>Пирожное "Крем-брюле"</h4>
+                    <p>Цена: 900 KZT</p>
+                    <button onclick="addToCart('Пирожное Крем-брюле', 900)">Добавить в корзину</button>
+                </div>
+                <!-- Добавь другие товары в категорию "Пирожные" -->
+            </div>
+        </div>
+
+        <!-- Группа "Макаруны" -->
+        <div class="category">
+            <h3>Макаруны</h3>
+            <div class="products" id="makaruny">
+                <div class="product" data-price="6000" data-popularity="4">
+                    <img src="photo_2025-02-22_02-26-01.jpg" alt="Макаруны">
+                    <h4>Макаруны</h4>
+                    <p>Цена: 6000 KZT</p>
+                    <button onclick="addToCart('Макаруны', 6000)">Добавить в корзину</button>
+                </div>
+                <!-- Добавь другие товары в категорию "Макаруны" -->
+            </div>
+        </div>
+
+        <!-- Группа "Пироги" -->
+        <div class="category">
+            <h3>Пироги</h3>
+            <div class="products" id="pirogi">
+                <div class="product" data-price="1200" data-popularity="2">
+                    <img src="photo_2025-02-22_02-30-45.jpg" alt="Пирог Ягодный">
+                    <h4>Пирог "Ягодный"</h4>
+                    <p>Цена: 1200 KZT</p>
+                    <button onclick="addToCart('Пирог Ягодный', 1200)">Добавить в корзину</button>
+                </div>
+                <!-- Добавь другие товары в категорию "Пироги" -->
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer">
+        &copy; 2025 NaomiSweet | Все права защищены
+        <a href="https://instagram.com" target="_blank">Instagram</a> |
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">YouTube</a>
+    </footer>
+
+    <script>
+        // Функция для добавления товара в корзину и обновления отображения корзины
+        function addToCart(productName, productPrice) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let product = {
+                name: productName,
+                price: productPrice,
+                quantity: 1
+            };
+
+            let existingProduct = cart.find(item => item.name === productName);
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            updateCart();
+        }
+
+        function updateCart() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartButton = document.querySelector('.cart-button');
+            const cartQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+            cartButton.textContent = `Корзина (${cartQuantity})`;
+        }
+
+        function sortProducts() {
+            const sortValue = document.getElementById('sort-select').value;
+            const categories = document.querySelectorAll('.category');
+            categories.forEach(category => {
+                const products = Array.from(category.querySelectorAll('.product'));
+                let sortedProducts;
+
+                if (sortValue === 'price-asc') {
+                    sortedProducts = products.sort((a, b) => {
+                        return parseInt(a.getAttribute('data-price')) - parseInt(b.getAttribute('data-price'));
+                    });
+                } else if (sortValue === 'price-desc') {
+                    sortedProducts = products.sort((a, b) => {
+                        return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
+                    });
+                } else if (sortValue === 'popularity') {
+                    sortedProducts = products.sort((a, b) => {
+                        return parseInt(b.getAttribute('data-popularity')) - parseInt(a.getAttribute('data-popularity'));
+                    });
+                }
+
+                const productList = category.querySelector('.products');
+                productList.innerHTML = '';
+                sortedProducts.forEach(product => productList.appendChild(product));
+            });
+        }
+
+        window.onload = function() {
+            updateCart();
+        };
+    </script>
+</body>
+</html>
