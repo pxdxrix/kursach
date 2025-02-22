@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.getElementById("register-form");
     const loginForm = document.getElementById("login-form");
-    const BASE_URL = "https://kursach-5twl.onrender.com"; // Используем Render-сервер
+    const BASE_URL = "https://kursach-x0h1.onrender.com"; // Используем Render-сервер
 
     if (registerForm) {
         registerForm.addEventListener("submit", async (e) => {
