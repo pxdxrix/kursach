@@ -18,75 +18,41 @@
         }
 
         header { 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(to right, #ff6f61, #ffcccb);
-            padding: 20px;
-            font-size: 36px;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-bottom: 2px solid #ffcccb;
+            background: #ffcccb; 
+            padding: 15px; 
+            text-align: center; 
+            font-size: 32px; 
         }
 
-        .header-left { 
-            display: flex;
-            align-items: center;
-        }
-
-        .header-left img { 
-            margin-right: 15px;
-            vertical-align: middle;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-        }
-
-        .auth-button {
-            padding: 10px 20px;
-            background-color: #ff6f61;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .auth-button:hover {
-            background-color: #d50000;
+        header img { 
+            vertical-align: middle; 
+            margin-left: 10px; 
         }
 
         nav { 
             display: flex; 
             justify-content: center; 
-            gap: 20px; 
-            padding: 15px; 
+            gap: 10px; 
+            padding: 10px; 
             background: #ffe4e1; 
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
         }
 
         nav a { 
             color: #333; 
             text-decoration: none; 
-            padding: 12px 20px; 
+            padding: 10px; 
             font-weight: normal;
-            font-size: 16px;
-            border-radius: 5px;
-            transition: color 0.3s ease, background-color 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         nav a:hover { 
-            color: white;
-            background-color: #ff6f61; 
+            color: #d50000; 
         }
 
         nav a.active { 
             font-weight: bold; 
-            color: #fff;
-            background-color: #ff6f61;
+            color: #d50000; 
         }
 
         .container { 
@@ -130,7 +96,6 @@
             display: flex; 
             flex-wrap: wrap; 
             gap: 20px; 
-            justify-content: space-between;
         }
 
         .product { 
@@ -199,13 +164,11 @@
         @media (max-width: 768px) {
             nav { 
                 flex-direction: column; 
-                align-items: center;
             }
 
             .products { 
                 flex-direction: column; 
                 align-items: center; 
-                gap: 10px; 
             }
 
             .product { 
@@ -214,14 +177,8 @@
         }
 
         @media (max-width: 480px) {
-            header { 
-                font-size: 24px;
-                flex-direction: column; 
-                text-align: center;
-            }
-
-            .auth-button {
-                font-size: 14px;
+            h2 { 
+                font-size: 20px; 
             }
 
             .category h3 {
@@ -231,222 +188,98 @@
             .product { 
                 width: 100%; 
             }
-
-            footer {
-                font-size: 14px;
-            }
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .scroll-top-btn {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #ff6f61;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            padding: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            z-index: 1000;
-        }
-
-        .scroll-top-btn:hover {
-            background-color: #d50000;
-            transform: scale(1.1);
-        }
-
-        @media (min-width: 769px) {
-            #scrollTopBtn {
-                display: block;
-            }
-        }
-
     </style>
 </head>
 <body>
-    <button id="scrollTopBtn" class="scroll-top-btn">↑ Наверх</button>
     <header>
-        <div class="header-left">
-            <img src="photo_2025-02-18_20-31-03-removebg-preview.png" alt="NaomiSweet Logo" width="100">
-            — когда сладости становятся искусством!
-        </div>
-        <div class="header-right">
-            <a href="login.html" class="auth-button" id="auth-button">Войти / Регистрация</a>
-            <a href="profile.html" class="auth-button" id="profile-button" style="display: none;">Личный кабинет</a>
-        </div>
+        NaomiSweet - Кондитерская
+        <img src="photo_2025-02-18_20-31-03-removebg-preview.png" alt="NaomiSweet Logo" width="80">
     </header>
-    
-    
     <nav>
-        <a href="index.html">Главная</a>
-        <a href="#" class="active">Каталог</a>
+        <a href="index.html" class="active">Главная</a>
+        <a href="#">Каталог</a>
         <a href="#footer">Контакты</a>
+        <a href="login.html">Войти</a>
         <a href="buy.html" class="cart-button">Корзина</a>
     </nav>
 
     <div class="container">
         <div class="filters">
-            <select id="category-select" onchange="scrollToCategory()">
-                <option value="torts">Торты</option>
-                <option value="pyrizhnye">Пирожные</option>
-                <option value="makaruny">Макаруны</option>
-                <option value="pirogi">Пироги</option>
+            <select id="sort-select" onchange="sortProducts()">
+                <option value="price-asc">По цене: от дешевого к дорогому</option>
+                <option value="price-desc">По цене: от дорогого к дешевому</option>
+                <option value="popularity">По популярности</option>
             </select>
         </div>
 
         <h2>Каталог товаров</h2>
 
         <!-- Группа "Торты" -->
-        <div class="category" id="torts">
+        <div class="category">
             <h3>Торты</h3>
-            <div class="products">
-                <!-- Пример товара -->
+            <div class="products" id="torts">
                 <div class="product" data-price="9900" data-popularity="5">
-                    <img src="photo_2025-02-22_18-06-13.jpg" alt="Торт Шоколадная мечта">
+                    <img src="БИСКВИТНЫЙ_ШОКОЛАДНЫЙ_ТОРТ_С_АПЕЛЬСИНОМ.jpeg" alt="Торт Шоколадная мечта">
                     <h4>Торт "Шоколадная мечта"</h4>
                     <p>Цена: 9900 KZT</p>
                     <button onclick="addToCart('Торт Шоколадная мечта', 9900)">Добавить в корзину</button>
                 </div>
-                <div class="product" data-price="6900" data-popularity="20">
-                    <img src="photo_2025-02-22_18-13-05.jpg" alt="Торт Лесные Ягоды">
-                    <h4>Торт "Лесные Ягоды"</h4>
-                    <p>Цена: 6900 KZT</p>
-                    <button onclick="addToCart('Торт Лесные Ягоды', 6900)">Добавить в корзину</button>
+                <!-- Добавь другие товары в категорию "Торты" -->
+            </div>
+        </div>
+
+        <!-- Группа "Пирожные" -->
+        <div class="category">
+            <h3>Пирожные</h3>
+            <div class="products" id="pyrizhnye">
+                <div class="product" data-price="900" data-popularity="3">
+                    <img src="5e8b96ebad5bc9d995f580dfb2eaa061.jpg" alt="Пирожное Крем-брюле">
+                    <h4>Пирожное "Крем-брюле"</h4>
+                    <p>Цена: 900 KZT</p>
+                    <button onclick="addToCart('Пирожное Крем-брюле', 900)">Добавить в корзину</button>
                 </div>
-                <div class="product" data-price="8990" data-popularity="12">
-                    <img src="photo_2025-02-22_18-06-16.jpg" alt="Белая Сказка">
-                    <h4>Торт "Белая Сказка"</h4>
-                    <p>Цена: 8990 KZT</p>
-                    <button onclick="addToCart('Белая Сказка', 8990)">Добавить в корзину</button>
-                </div>
-                <div class="product" data-price="10990" data-popularity="8">
-                    <img src="photo_2025-02-22_18-06-15 (2).jpg" alt="Красный Бархат">
-                    <h4>Торт "Красный Бархат"</h4>
-                    <p>Цена: 10990 KZT</p>
-                    <button onclick="addToCart('Торт Красный Бархат', 10990)">Добавить в корзину</button>
-                </div>
-                <!-- Группа "Макаруны" -->
-        <div class="category" id="makaruny">
+                <!-- Добавь другие товары в категорию "Пирожные" -->
+            </div>
+        </div>
+
+        <!-- Группа "Макаруны" -->
+        <div class="category">
             <h3>Макаруны</h3>
-            <div class="products">
-                <!-- Пример товара -->
+            <div class="products" id="makaruny">
                 <div class="product" data-price="6000" data-popularity="4">
                     <img src="photo_2025-02-22_02-26-01.jpg" alt="Макаруны">
                     <h4>Макаруны</h4>
                     <p>Цена: 6000 KZT</p>
                     <button onclick="addToCart('Макаруны', 6000)">Добавить в корзину</button>
                 </div>
-                <!-- Другие товары -->
+                <!-- Добавь другие товары в категорию "Макаруны" -->
             </div>
         </div>
 
         <!-- Группа "Пироги" -->
-        <div class="category" id="pirogi">
+        <div class="category">
             <h3>Пироги</h3>
-            <div class="products">
-                <!-- Пример товара -->
+            <div class="products" id="pirogi">
                 <div class="product" data-price="1200" data-popularity="2">
-                    <img src="photo_2025-02-22_02-30-45.jpg" alt="Пирог Абрикосовый">
-                    <h4>Пирог "Абрикосовый"</h4>
+                    <img src="photo_2025-02-22_02-30-45.jpg" alt="Пирог Ягодный">
+                    <h4>Пирог "Ягодный"</h4>
                     <p>Цена: 1200 KZT</p>
-                    <button onclick="addToCart('Пирог Абрикосовый', 1200)">Добавить в корзину</button>
+                    <button onclick="addToCart('Пирог Ягодный', 1200)">Добавить в корзину</button>
                 </div>
-                <div class="product" data-price="1200" data-popularity="6">
-                    <img src="photo_2025-02-22_18-37-37.jpg" alt="Пирог Яблочный">
-                    <h4>Пирог "Яблочный"</h4>
-                    <p>Цена: 1200 KZT</p>
-                    <button onclick="addToCart('Пирог Яблочный', 1200)">Добавить в корзину</button>
-                </div>
-                    <div class="product" data-price="1200" data-popularity="10">
-                    <img src="photo_2025-02-22_18-37-38.jpg" alt="Пирог Малиновый">
-                    <h4>Пирог "Малиновый"</h4>
-                    <p>Цена: 1200 KZT</p>
-                    <button onclick="addToCart('Пирог Малиновый', 1200)">Добавить в корзину</button>
-                </div>
-                <div class="product" data-price="1200" data-popularity="5">
-                    <img src="photo_2025-02-22_19-43-07.jpg" alt="Пирог Вишнёвый">
-                    <h4>Пирог "Вишнёвый"</h4>
-                    <p>Цена: 1200 KZT</p>
-                    <button onclick="addToCart('Пирог Вишнёвый', 1200)">Добавить в корзину</button>
-                </div>+
-                <!-- Другие товары -->
+                <!-- Добавь другие товары в категорию "Пироги" -->
             </div>
         </div>
-
-        <!-- Группа "Пирожные" -->
-        <div class="category" id="pyrizhnye">
-            <h3>Пирожные</h3>
-            <div class="products">
-                <!-- Пример товара -->
-                <div class="product" data-price="900" data-popularity="3">
-                    <img src="photo_2025-02-22_18-19-39.jpg" alt="Пирожное Крем-брюле">
-                    <h4>Пирожное "Крем-брюле"</h4>
-                    <p>Цена: 900 KZT</p>
-                    <button onclick="addToCart('Пирожное Крем-брюле', 900)">Добавить в корзину</button>
-                </div>
-                <div class="product" data-price="800" data-popularity="8">
-                    <img src="photo_2025-02-22_18-32-23.jpg" alt="Пирожное Шоколадное">
-                    <h4>Пирожное "Шоколадное"</h4>
-                    <p>Цена: 800 KZT</p>
-                    <button onclick="addToCart('Пирожное Шоколадное', 800)">Добавить в корзину</button>
-                </div>
-                <div class="product" data-price="1100" data-popularity="5">
-                    <img src="photo_2025-02-22_18-25-42.jpg" alt="Пирожное Малиновое">
-                    <h4>Пирожное "Малиновое"</h4>
-                    <p>Цена: 1100 KZT</p>
-                    <button onclick="addToCart('Пирожное Малиновое', 1100)">Добавить в корзину</button>
-                </div>
-                <div class="product" data-price="1000" data-popularity="9">
-                    <img src="photo_2025-02-22_18-25-43.jpg" alt="Пирожное Ежевичное">
-                    <h4>Пирожное "Ежевичное"</h4>
-                    <p>Цена: 1000 KZT</p>
-                    <button onclick="addToCart('Пирожное Ежевичное', 1000)">Добавить в корзину</button>
-                </div>
-                <!-- Другие товары -->
-            </div>
-        </div>
-                <!-- Другие товары -->
-            </div>
-        </div>
-
-        <!-- Остальные категории -->
-
     </div>
 
     <footer id="footer">
         &copy; 2025 NaomiSweet | Все права защищены
         <a href="https://instagram.com" target="_blank">Instagram</a> |
         <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">YouTube</a>
-        <h1> NaomiSweet@gmail.com </h1>
     </footer>
 
     <script>
-                // Получаем кнопку
-let scrollTopBtn = document.getElementById("scrollTopBtn");
-
-// Показать/скрыть кнопку в зависимости от прокрутки
-window.onscroll = function() {
-  if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-    scrollTopBtn.style.display = "block"; // Показываем кнопку, если прокрутили страницу вниз
-  } else {
-    scrollTopBtn.style.display = "none"; // Скрываем кнопку, если на верху страницы
-  }
-};
-
-// Прокрутка страницы наверх при клике на кнопку
-scrollTopBtn.addEventListener('click', function() {
-  window.scrollTo({ top: 0, behavior: 'smooth' }); // Плавная прокрутка наверх
-});
-        
-        // Сохранение и обновление корзины
+        // Функция для добавления товара в корзину и обновления отображения корзины
         function addToCart(productName, productPrice) {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             let product = {
@@ -463,6 +296,7 @@ scrollTopBtn.addEventListener('click', function() {
             }
 
             localStorage.setItem("cart", JSON.stringify(cart));
+
             updateCart();
         }
 
@@ -473,17 +307,36 @@ scrollTopBtn.addEventListener('click', function() {
             cartButton.textContent = `Корзина (${cartQuantity})`;
         }
 
-        // Прокрутка к выбранной категории
-        function scrollToCategory() {
-            const categoryId = document.getElementById('category-select').value;
-            const categoryElement = document.getElementById(categoryId);
-            categoryElement.scrollIntoView({ behavior: 'smooth' });
+        function sortProducts() {
+            const sortValue = document.getElementById('sort-select').value;
+            const categories = document.querySelectorAll('.category');
+            categories.forEach(category => {
+                const products = Array.from(category.querySelectorAll('.product'));
+                let sortedProducts;
+
+                if (sortValue === 'price-asc') {
+                    sortedProducts = products.sort((a, b) => {
+                        return parseInt(a.getAttribute('data-price')) - parseInt(b.getAttribute('data-price'));
+                    });
+                } else if (sortValue === 'price-desc') {
+                    sortedProducts = products.sort((a, b) => {
+                        return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
+                    });
+                } else if (sortValue === 'popularity') {
+                    sortedProducts = products.sort((a, b) => {
+                        return parseInt(b.getAttribute('data-popularity')) - parseInt(a.getAttribute('data-popularity'));
+                    });
+                }
+
+                const productList = category.querySelector('.products');
+                productList.innerHTML = '';
+                sortedProducts.forEach(product => productList.appendChild(product));
+            });
         }
 
         window.onload = function() {
             updateCart();
         };
-
     </script>
 </body>
 </html>
