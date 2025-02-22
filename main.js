@@ -1,98 +1,70 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const BASE_URL = "https://kursach-x0h1.onrender.com"; // URL сервера на Render
-
-    const registerForm = document.getElementById("register-form");
-    const loginForm = document.getElementById("login-form");
+    const BASE_URL = "https://kursach-x0h1.onrender.com"; // Сервер на Render
+    const container = document.querySelector(".container");
     const registerBtn = document.querySelector(".register-btn");
     const loginBtn = document.querySelector(".login-btn");
-    const switchToLogin = document.querySelector(".switch-to-login");
-    const switchToRegister = document.querySelector(".switch-to-register");
+    const registerForm = document.querySelector(".form-box.register form");
+    const loginForm = document.querySelector(".form-box.login form");
 
-    // Переключение между формами
-    if (switchToLogin && switchToRegister) {
-        switchToLogin.addEventListener("click", (e) => {
-            e.preventDefault();
-            registerForm.style.display = "none";
-            loginForm.style.display = "block";
-        });
+    // Переключение форм
+    registerBtn.addEventListener("click", () => {
+        container.classList.add("active");
+    });
 
-        switchToRegister.addEventListener("click", (e) => {
-            e.preventDefault();
-            loginForm.style.display = "none";
-            registerForm.style.display = "block";
-        });
-    }
+    loginBtn.addEventListener("click", () => {
+        container.classList.remove("active");
+    });
 
-    // ✅ Регистрация
-    if (registerForm) {
-        registerForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
+    // Регистрация пользователя
+    registerForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const username = registerForm.querySelector("input[placeholder='Имя']").value;
+        const email = registerForm.querySelector("input[placeholder='Email']").value;
+        const password = registerForm.querySelector("input[placeholder='Пароль']").value;
 
-            const username = document.getElementById("username").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value.trim();
+        try {
+            const response = await fetch(`${BASE_URL}/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password })
+            });
 
-            if (!username || !email || !password) {
-                alert("Заполните все поля!");
-                return;
+            const result = await response.json();
+            alert(result.message || "Регистрация прошла успешно!");
+
+            if (response.ok) {
+                window.location.href = "login.html"; // Переход на страницу входа
             }
+        } catch (error) {
+            console.error("Ошибка запроса:", error);
+            alert("Ошибка регистрации. Попробуйте позже.");
+        }
+    });
 
-            console.log("Отправка данных регистрации:", { username, email, password });
+    // Авторизация пользователя
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-            try {
-                const response = await fetch(`${BASE_URL}/register`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, email, password }),
-                });
+        const email = loginForm.querySelector("input[placeholder='Имя']").value;
+        const password = loginForm.querySelector("input[placeholder='Пароль']").value;
 
-                if (!response.ok) throw new Error("Ошибка регистрации");
+        try {
+            const response = await fetch(`${BASE_URL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
 
-                const result = await response.json();
-                console.log("Ответ сервера:", result);
+            const result = await response.json();
+            alert(result.message || "Вход выполнен!");
 
-                alert("✅ Регистрация успешна!");
-                window.location.href = "/login.html";
-            } catch (error) {
-                console.error("❌ Ошибка запроса:", error);
-                alert("❌ Не удалось зарегистрироваться.");
+            if (response.ok) {
+                window.location.href = "dashboard.html"; // Переход на защищенную страницу
             }
-        });
-    }
-
-    // ✅ Авторизация
-    if (loginForm) {
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const email = document.getElementById("login-email").value.trim();
-            const password = document.getElementById("login-password").value.trim();
-
-            if (!email || !password) {
-                alert("Введите email и пароль!");
-                return;
-            }
-
-            console.log("Отправка данных входа:", { email, password });
-
-            try {
-                const response = await fetch(`${BASE_URL}/login`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                });
-
-                if (!response.ok) throw new Error("Ошибка входа");
-
-                const result = await response.json();
-                console.log("Ответ сервера:", result);
-
-                alert("✅ Вход выполнен!");
-                window.location.href = "/dashboard.html";
-            } catch (error) {
-                console.error("❌ Ошибка запроса:", error);
-                alert("❌ Неправильный email или пароль.");
-            }
-        });
-    }
+        } catch (error) {
+            console.error("Ошибка запроса:", error);
+            alert("Ошибка входа. Попробуйте позже.");
+        }
+    });
 });
