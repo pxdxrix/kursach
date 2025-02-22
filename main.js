@@ -1,21 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const BASE_URL = "https://kursach-x0h1.onrender.com"; // URL сервера на Render
+
     const registerForm = document.getElementById("register-form");
     const loginForm = document.getElementById("login-form");
-    const BASE_URL = "https://kursach-x0h1.onrender.com";
-    const container = document.querySelector('.container');
-    const registerBtn = document.querySelector('.register-btn');
-    const loginBtn = document.querySelector('.login-btn');
+    const registerBtn = document.querySelector(".register-btn");
+    const loginBtn = document.querySelector(".login-btn");
+    const switchToLogin = document.querySelector(".switch-to-login");
+    const switchToRegister = document.querySelector(".switch-to-register");
 
-    // ✅ Делаем переключение форм
-    if (registerBtn) {
-        registerBtn.addEventListener('click', () => {
-            container.classList.add('active');
+    // Переключение между формами
+    if (switchToLogin && switchToRegister) {
+        switchToLogin.addEventListener("click", (e) => {
+            e.preventDefault();
+            registerForm.style.display = "none";
+            loginForm.style.display = "block";
         });
-    }
 
-    if (loginBtn) {
-        loginBtn.addEventListener('click', () => {
-            container.classList.remove('active');
+        switchToRegister.addEventListener("click", (e) => {
+            e.preventDefault();
+            loginForm.style.display = "none";
+            registerForm.style.display = "block";
         });
     }
 
@@ -24,9 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
         registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const username = document.getElementById("username").value;
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (!username || !email || !password) {
+                alert("Заполните все поля!");
+                return;
+            }
 
             console.log("Отправка данных регистрации:", { username, email, password });
 
@@ -37,17 +46,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     body: JSON.stringify({ username, email, password }),
                 });
 
+                if (!response.ok) throw new Error("Ошибка регистрации");
+
                 const result = await response.json();
                 console.log("Ответ сервера:", result);
 
-                if (response.ok) {
-                    alert("✅ Регистрация успешна!");
-                    window.location.href = "/login.html";
-                } else {
-                    alert(result.message || "❌ Ошибка регистрации");
-                }
+                alert("✅ Регистрация успешна!");
+                window.location.href = "/login.html";
             } catch (error) {
                 console.error("❌ Ошибка запроса:", error);
+                alert("❌ Не удалось зарегистрироваться.");
             }
         });
     }
@@ -57,8 +65,13 @@ document.addEventListener("DOMContentLoaded", function () {
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const email = document.getElementById("login-email").value;
-            const password = document.getElementById("login-password").value;
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value.trim();
+
+            if (!email || !password) {
+                alert("Введите email и пароль!");
+                return;
+            }
 
             console.log("Отправка данных входа:", { email, password });
 
@@ -69,17 +82,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     body: JSON.stringify({ email, password }),
                 });
 
+                if (!response.ok) throw new Error("Ошибка входа");
+
                 const result = await response.json();
                 console.log("Ответ сервера:", result);
 
-                if (response.ok) {
-                    alert("✅ Вход выполнен!");
-                    window.location.href = "/dashboard.html";
-                } else {
-                    alert(result.message || "❌ Ошибка входа");
-                }
+                alert("✅ Вход выполнен!");
+                window.location.href = "/dashboard.html";
             } catch (error) {
                 console.error("❌ Ошибка запроса:", error);
+                alert("❌ Неправильный email или пароль.");
             }
         });
     }
