@@ -1,17 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.getElementById("register-form");
     const loginForm = document.getElementById("login-form");
-    const BASE_URL = "https://kursach-x0h1.onrender.com"; // Используем Render-сервер
-const container = document.querySelector('.container');
-const registerBtn = document.querySelector('.register-btn');
-const loginBtn = document.querySelector('.login-btn');
+    const BASE_URL = "https://kursach-x0h1.onrender.com";
+    const container = document.querySelector('.container');
+    const registerBtn = document.querySelector('.register-btn');
+    const loginBtn = document.querySelector('.login-btn');
 
+    // ✅ Делаем переключение форм
+    if (registerBtn) {
+        registerBtn.addEventListener('click', () => {
+            container.classList.add('active');
+        });
+    }
+
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove('active');
+        });
+    }
+
+    // ✅ Регистрация
     if (registerForm) {
         registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-registerBtn.addEventListener('click', () => {
-    container.classList.add('active');
-})
 
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
@@ -30,17 +41,18 @@ registerBtn.addEventListener('click', () => {
                 console.log("Ответ сервера:", result);
 
                 if (response.ok) {
-                    alert("Регистрация прошла успешно!");
-                    window.location.href = "/login.html"; // Переход на страницу входа
+                    alert("✅ Регистрация успешна!");
+                    window.location.href = "/login.html";
                 } else {
-                    alert(result.message || "Ошибка регистрации");
+                    alert(result.message || "❌ Ошибка регистрации");
                 }
             } catch (error) {
-                console.error("Ошибка запроса:", error);
+                console.error("❌ Ошибка запроса:", error);
             }
         });
     }
 
+    // ✅ Авторизация
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -61,17 +73,14 @@ registerBtn.addEventListener('click', () => {
                 console.log("Ответ сервера:", result);
 
                 if (response.ok) {
-                    alert("Вход выполнен!");
-                    window.location.href = "/dashboard.html"; // Переход на защищенную страницу
+                    alert("✅ Вход выполнен!");
+                    window.location.href = "/dashboard.html";
                 } else {
-                    alert(result.message || "Ошибка входа");
+                    alert(result.message || "❌ Ошибка входа");
                 }
             } catch (error) {
-                console.error("Ошибка запроса:", error);
+                console.error("❌ Ошибка запроса:", error);
             }
         });
     }
 });
-loginBtn.addEventListener('click', () => {
-    container.classList.remove('active');
-})
