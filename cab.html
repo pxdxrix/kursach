@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - NaomiSweet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, #ff6f61, #ffcccb);
+            padding: 20px;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid #ffcccb;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-left img {
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-button {
+            padding: 8px 16px;
+            background-color: #ff6f61;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .auth-button:hover {
+            background-color: #d50000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+            background: #ffe4e1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: normal;
+            font-size: 14px;
+            border-radius: 5px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: white;
+            background-color: #ff6f61;
+        }
+
+        nav a.active {
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff6f61;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #ff6f61;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .profile-info div {
+            width: 48%;
+        }
+
+        .profile-info label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .profile-info input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .order-history {
+            margin-top: 40px;
+        }
+
+        .order-history table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .order-history th, .order-history td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-history th {
+            background-color: #ff6f61;
+            color: white;
+        }
+
+        .order-history tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #ffcccb;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: #d50000;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 18px;
+            }
+
+            nav {
+                flex-direction: column;
+                padding: 5px;
+            }
+
+            .profile-info {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+
+            .profile-info div {
+                width: 100%;
+            }
+
+            .auth-button {
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .order-history th, .order-history td {
+                padding: 8px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="photo_2025-02-18_20-31-03-removebg-preview.png" alt="NaomiSweet Logo" width="80">
+            Личный кабинет
+        </div>
+        <div class="header-right">
+            <a href="login.html" class="auth-button">Выйти</a>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="katalog.html">Каталог</a>
+        <a href="#footer">Контакты</a>
+        <a href="buy.html" class="cart-button">Корзина</a>
+    </nav>
+
+    <div class="container">
+        <h2>Добро пожаловать в ваш личный кабинет!</h2>
+
+        <div class="profile-info">
+            <div>
+                <label for="name">Имя:</label>
+                <input type="text" id="name" value="Анна Иванова" disabled>
+
+                <label for="email">Электронная почта:</label>
+                <input type="email" id="email" value="anna@mail.com" disabled>
+
+                <label for="phone">Телефон:</label>
+                <input type="text" id="phone" value="8 (777) 123-45-67" disabled>
+            </div>
+
+            <div>
+                <label for="address">Адрес доставки:</label>
+                <input type="text" id="address" value="Алматы, ул. Абая 23" disabled>
+
+                <label for="payment">Способ оплаты:</label>
+                <input type="text" id="payment" value="Картой" disabled>
+
+                <button onclick="editProfile()">Редактировать</button>
+            </div>
+        </div>
+
+        <div class="order-history">
+            <h3>История заказов</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Номер заказа</th>
+                        <th>Дата</th>
+                        <th>Статус</th>
+                        <th>Сумма</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#001</td>
+                        <td>22 февраля 2025</td>
+                        <td>Доставлен</td>
+                        <td>15 000 KZT</td>
+                    </tr>
+                    <tr>
+                        <td>#002</td>
+                        <td>18 февраля 2025</td>
+                        <td>В процессе</td>
+                        <td>8 900 KZT</td>
+                    </tr>
+                    <tr>
+                        <td>#003</td>
+                        <td>14 февраля 2025</td>
+                        <td>Доставлен</td>
+                        <td>5 500 KZT</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer id="footer">
+        &copy; 2025 NaomiSweet | Все права защищены
+        <a href="https://instagram.com" target="_blank">Instagram</a> |
+        <a href="https://www.youtube.com" target="_blank">YouTube</a>
+        <h1> NaomiSweet@gmail.com </h1>
+    </footer>
+
+    <script>
+        function editProfile() {
+            // Функция для редактирования профиля (для примера)
+            alert('Редактирование профиля');
+        }
+    </script>
+
+</body>
+</html>

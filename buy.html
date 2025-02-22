@@ -5,194 +5,257 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина NaomiSweet</title>
     <style>
-    /* Основные стили */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f8f8;
-        margin: 0;
-        padding: 0;
-    }
-    /* Стили для header */
-    header { 
-        background: #ffcccb; 
-        padding: 10px; 
-        text-align: center; 
-        font-size: 24px; 
-    }
-
-    header img { 
-        vertical-align: middle; 
-        margin-left: 10px; 
-    }
-
-    /* Стили для nav */
-    nav { 
-        display: flex; 
-        justify-content: center; 
-        gap: 10px; 
-        padding: 10px; 
-        background: #ffe4e1; 
-        margin-bottom: 20px;
-    }
-
-    nav a { 
-        color: #333; 
-        text-decoration: none; 
-        padding: 8px; 
-        font-weight: normal;
-        transition: color 0.3s ease;
-    }
-
-    nav a:hover { 
-        color: #d50000; 
-    }
-
-    nav a.active { 
-        font-weight: bold; 
-        color: #d50000; 
-    }
-
-    .container {
-        padding: 15px;
-        background-color: #fff;
-        max-width: 1000px;
-        margin: 0 auto;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    
-    h2 {
-        color: #333;
-    }
-
-    /* Таблица корзины */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 15px 0;
-    }
-    
-    table th, table td {
-        padding: 8px;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-    
-    table th {
-        background-color: #ffcccc;
-    }
-    
-    /* Кнопки */
-    .clear-cart-button, #payment-button {
-        width: 100%;
-        background-color: #ff6666;
-        color: white;
-        padding: 12px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 5px;
-        margin-top: 15px;
-    }
-    
-    .clear-cart-button:hover, #payment-button:hover {
-        background-color: #ff4d4d;
-    }
-
-    #payment-button:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-    }
-
-    /* Формы */
-    .form-group {
-        margin: 15px 0;
-    }
-    
-    .form-group label {
-        display: block;
-        font-size: 16px;
-        margin-bottom: 5px;
-    }
-    
-    .form-group input {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-
-    /* Сообщение об успешном заказе */
-    .order-message {
-        margin-top: 15px;
-        padding: 10px;
-        background-color: #e0f7e0;
-        color: #388e3c;
-        border-radius: 5px;
-        display: none;
-    }
-
-    /* Сообщение о пустой корзине */
-    #empty-cart-message {
-        color: #ff6666;
-        font-size: 18px;
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    footer { 
-        text-align: center; 
-        padding: 10px; 
-        background: #ffcccb; 
-        margin-top: 20px; 
-    }
-
-    footer a { 
-        color: #333; 
-        text-decoration: none; 
-        margin: 0 10px;
-    }
-
-    footer a:hover { 
-        color: #d50000; 
-    }
-
-    /* Медиазапросы для мобильных устройств */
-    @media (max-width: 600px) {
-        header {
-            font-size: 20px;
+        /* Основные стили */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
         }
-
-        nav {
-            flex-direction: column;
+    
+        header { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, #ff6f61, #ffcccb);
+            padding: 20px;
+            font-size: 36px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid #ffcccb;
+            flex-wrap: wrap;
+        }
+    
+        .header-left { 
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+    
+        .header-left img { 
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+    
+        .header-right {
+            display: flex;
             align-items: center;
         }
-
-        nav a {
-            padding: 10px;
+    
+        .auth-button {
+            padding: 10px 20px;
+            background-color: #ff6f61;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
-
+    
+        .auth-button:hover {
+            background-color: #d50000;
+        }
+    
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            padding: 15px; 
+            background: #ffe4e1; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+            transition: background-color 0.3s ease;
+            flex-wrap: wrap;
+        }
+    
+        nav a { 
+            color: #333; 
+            text-decoration: none; 
+            padding: 12px 20px; 
+            font-weight: normal;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+    
+        nav a:hover { 
+            color: white;
+            background-color: #ff6f61; 
+        }
+    
+        nav a.active { 
+            font-weight: bold; 
+            color: #fff;
+            background-color: #ff6f61;
+        }
+    
+        .container {
+            padding: 15px;
+            background-color: #fff;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+    
+        /* Таблица корзины */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+    
         table th, table td {
-            padding: 6px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
         }
-
+    
+        table th {
+            background-color: #ffcccc;
+        }
+    
+        /* Кнопки */
         .clear-cart-button, #payment-button {
-            padding: 10px;
+            width: 100%;
+            background-color: #ff6666;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 15px;
         }
-    }
-    </style>
+    
+        .clear-cart-button:hover, #payment-button:hover {
+            background-color: #ff4d4d;
+        }
+    
+        #payment-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    
+        /* Формы */
+        .form-group {
+            margin: 15px 0;
+        }
+    
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+    
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    
+        /* Сообщение об успешном заказе */
+        .order-message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e0f7e0;
+            color: #388e3c;
+            border-radius: 5px;
+            display: none;
+        }
+    
+        /* Сообщение о пустой корзине */
+        #empty-cart-message {
+            color: #ff6666;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        footer { 
+            text-align: center; 
+            padding: 10px; 
+            background: #ffcccb; 
+            margin-top: 20px; 
+        }
+    
+        footer a { 
+            color: #333; 
+            text-decoration: none; 
+            margin: 0 10px;
+        }
+    
+        footer a:hover { 
+            color: #d50000; 
+        }
+    
+        /* Медиазапросы для мобильных устройств */
+        @media (max-width: 600px) {
+            header {
+                font-size: 18px;
+                flex-direction: column;
+                padding: 15px;
+            }
+    
+            .header-left {
+                font-size: 14px;
+                justify-content: center;
+                text-align: center;
+            }
+    
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+    
+            nav a {
+                padding: 10px;
+                font-size: 14px;
+            }
+    
+            table th, table td {
+                padding: 6px;
+            }
+    
+            .clear-cart-button, #payment-button {
+                padding: 10px;
+                font-size: 14px;
+            }
+    
+            .form-group input {
+                font-size: 14px;
+            }
+    
+            footer {
+                font-size: 14px;
+            }
+        }
+        </style>
 </head>
 <body>
     <header>
-        NaomiSweet - Кондитерская
-        <img src="photo_2025-02-18_20-31-03-removebg-preview.png" alt="NaomiSweet Logo" width="60">
+        <div class="header-left">
+            <img src="photo_2025-02-18_20-31-03-removebg-preview.png" alt="NaomiSweet Logo" width="100">
+            — когда сладости становятся искусством!
+        </div>
+        <div class="header-right">
+            <a href="login.html" class="auth-button" id="auth-button">Войти / Регистрация</a>
+            <a href="profile.html" class="auth-button" id="profile-button" style="display: none;">Личный кабинет</a>
+        </div>
     </header>
+    
+    
     <nav>
-        <a href="index.html" class="active">Главная</a>
+        <a href="index.html" >Главная</a>
         <a href="katalog.html">Каталог</a>
-        <a href="login.html">Войти</a>
-    </nav>
+        <a href="buy.html" class="active">Корзина</a>
+        </nav>
 
     <div class="container">
         <h2>Корзина товаров</h2>
@@ -248,6 +311,7 @@
     </div>
 
     <script>
+        
         // Функция для отображения корзины
         function loadCart() {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
