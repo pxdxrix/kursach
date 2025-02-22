@@ -7,13 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector(".form-box.login form");
 
     if (registerBtn) {
-        registerBtn.addEventListener("click", () => {
+        registerBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             container.classList.add("active");
         });
     }
 
     if (loginBtn) {
-        loginBtn.addEventListener("click", () => {
+        loginBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             container.classList.remove("active");
         });
     }
@@ -64,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert(result.message || "Вход выполнен!");
 
                 if (response.ok) {
-                    window.location.href = "dashboard.html"; // Переход на защищенную страницу
+                    window.location.href = "index.html"; // Переход на главную страницу
                 }
             } catch (error) {
                 console.error("Ошибка запроса:", error);
